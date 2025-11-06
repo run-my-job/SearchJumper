@@ -3,34 +3,25 @@
 
 name: Deploy page
 
-on:
-  push:
-    branches: [ main ]
-    paths-ignore:
-      - '**.md'
-      - '**.gif'
-      - '**.cmd'
-      - 'LICENSE'
-      - '.gitignore'
-
+on: push
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: puzl-ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
-    - run: npm install
-    - run: npx update-browserslist-db@latest
-    - run: CI=false && npm run build
-    - name: Deploy 🚀 # 部署
-      id: 'deploy'
-      uses: JamesIves/github-pages-deploy-action@v4.3.3 # 部署到github的静态页，会将打包后的文件推送至下面填写的分支，可以直接新开一个分支用来放打包后的文件
-      with:
-        BRANCH: gh-pages # 编译文件分支
-        FOLDER: build # 编译文件的文件夹
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm install
+      - run: npx update-browserslist-db@latest
+      - run: CI=false && npm run build
+      - name: Deploy 🚀 # 部署
+        id: 'deploy'
+        uses: JamesIves/github-pages-deploy-action@v4.3.3 # 部署到github的静态页，会将打包后的文件推送至下面填写的分支，可以直接新开一个分支用来放打包后的文件
+        with:
+          BRANCH: gh-pages # 编译文件分支
+          FOLDER: build # 编译文件的文件夹

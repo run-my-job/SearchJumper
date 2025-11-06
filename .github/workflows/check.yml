@@ -5,7 +5,7 @@ name: check
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       - '**.md'
       - '**.gif'
@@ -16,15 +16,15 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: puzl-ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
-    - run: npm install
-    - run: npx update-browserslist-db@latest
-    - run: CI=false && npm run build
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm install
+      - run: npx update-browserslist-db@latest
+      - run: CI=false && npm run build
